@@ -1,0 +1,32 @@
+# --- learning / scaffold files (never pushed) ---
+WORKFLOW.md
+INTERVIEW_QA.md
+INTERPRETATION.md
+01_build.ipynb
+02_build.R
+_gen*.py
+01_build_ran_tried_hands_on_effort_practiced.ipynb
+02_build_practiced_tried_hands_on_effort_ran.R
+Single_Cell_RNA_Seq_analysis.ipynb
+data/
+.RDataTmp
+.RData
+
+
+# --- generated outputs / data ---
+results_py/*
+results_R/*
+!results_py/umap_celltypes.png
+!results_R/umap_celltypes.png
+data_R/
+*.h5ad
+*.rds
+
+# --- environment junk ---
+.ipynb_checkpoints/
+__pycache__/
+.Rhistory
+.RData
+.Rproj.user/
+.RDataTmp
+.RData
