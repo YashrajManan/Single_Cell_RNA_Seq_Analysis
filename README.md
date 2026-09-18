@@ -45,19 +45,29 @@ The unsupervised pipeline recovers the expected tumour-microenvironment compartm
 marker-based calls agree with independent annotation. Biologically: a tumour is an *ecosystem* of malignant
 epithelium plus stroma and immune cells, resolvable only at single-cell resolution.
 
+**R/Seurat twin, on the identical cells:** malignant, endothelial, fibroblast and macrophage labels each
+strongly concentrate on their matching Census category (malignant: ~1,700/1,900 cells; endothelial: ~100% across
+endothelial subtypes; fibroblast and macrophage similarly dominant). Its "T cell" label is a broader lymphocyte
+super-cluster that also picks up B/plasma cells — because the R pipeline used 10 PCs (`dims=1:10`, the standard
+Seurat tutorial default) vs Python's 40, under-resolving lymphocyte subtypes. This is an expected, explainable
+cross-tool difference, not an error, and is documented rather than hidden.
+
 ## Limitations
 
-Parameter-dependent (QC thresholds, #HVGs, #PCs, Leiden resolution); UMAP geometry is not quantitative;
-annotation is marker-based; the Census pool spans multiple donors/datasets, so a rigorous study would
-batch-integrate (Harmony/scVI) first; proving an epithelial cluster is *malignant* (vs normal epithelium) needs
-copy-number inference (inferCNV/CopyKAT); NK cells fold into the T-cell clusters at this resolution.
+Parameter-dependent (QC thresholds, #HVGs, #PCs, Leiden/Louvain resolution — and the R/Python PC-count difference
+above); UMAP geometry is not quantitative; annotation is marker-based, and a few clusters in each language lacked
+a clean marker signature and were labelled via a ground-truth crosstab tiebreak rather than markers alone; the
+Census pool spans multiple donors/datasets, so a rigorous study would batch-integrate (Harmony/scVI) first;
+proving an epithelial cluster is *malignant* (vs normal epithelium) needs copy-number inference
+(inferCNV/CopyKAT); NK cells fold into other clusters at this resolution in both languages.
 
 ## Files
 
 ```
 single_cell_tme.ipynb    # Python / Scanpy pipeline (fetch → cluster → annotate → validate)
 single_cell_tme.R        # R / Seurat twin (reads the same cells exported as 10x)
-results_py/              # UMAPs, marker table, crosstab vs Census
+results_py/              # UMAPs, marker table, crosstab vs Census (Python)
+results_R/               # UMAPs, marker table, crosstab vs Census (R)
 data/tumor_10x/          # the fetched cells in 10x format (written by the notebook; feeds the R twin)
 ```
 
